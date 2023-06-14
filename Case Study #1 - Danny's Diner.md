@@ -93,6 +93,49 @@ where r=1;
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/e0bca9e2-c5b4-49a6-94c4-3746ffd67d1f)
 
+#### 6 /* Which item was purchased first by the customer after they became a member?*/
+
+with item_after_membership as(select mem.customer_id as customer, m.product_name as product ,
+
+rank() over(partition by mem.customer_id
+
+order by s.order_date ) as r
+
+from members as mem  join sales as s on mem.customer_id=s.customer_id
+
+join  menu as m on m.product_id=s.product_id
+
+where mem.join_date>=s.order_date)
+
+select customer,product,r from item_after_membership
+
+where r=1 ;
+
+#### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/b58e21d2-ff7a-4771-b15b-a1ec3e0e1045)
+#### 7/* Which item was purchased just before the customer became a member?*/
+
+with item_before_membership as(select mem.customer_id as customer, m.product_name as product ,
+
+rank() over(partition by mem.customer_id
+
+order by s.order_date DESC ) as r
+
+from members as mem join sales as s on s.customer_id=mem.customer_id
+
+join menu as m on s.product_id=m.product_id
+
+where mem.join_date<s.order_date)
+
+select distinct(customer),product,r from item_before_membership
+
+where r=1 ;
+#### output 
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/a9858d8c-969b-440a-90ae-605cdfe043d2)
+
+ 
+ 
+ 
 
  
 
