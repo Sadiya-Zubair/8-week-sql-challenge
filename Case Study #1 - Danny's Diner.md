@@ -22,118 +22,187 @@ You can inspect the entity relationship diagram and example data below.
 
 ## Case Study Questions And Answers
 
-####  1 /* What is the total amount each customer spent at the restaurant? */
+####  1. What is the total amount each customer spent at the restaurant? 
 
-select sales.customer_id, sum(menu.price) 
+      select sales.customer_id, sum(menu.price) 
 
-from menu inner join sales  on menu.product_id=sales.product_id
+      from menu inner join sales  on menu.product_id=sales.product_id
 
-group by customer_id;
+       group by customer_id;
 
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/59c8b996-3f7c-4503-b343-41b99cf081f1)
 
-#### 2 /* How many days has each customer visited the restaurant? */
+#### 2. How many days has each customer visited the restaurant? 
 
-select customer_id, count(distinct(order_date)) as no_days from sales 
+        select customer_id, count(distinct(order_date)) as no_days from sales 
 
-group by customer_id
+        group by customer_id
 
-order by no_days DESC;
+        order by no_days DESC;
 
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/1cc0a0ad-376b-40a9-a334-b853442c65d8)
-#### 3/* What was the first item from the menu purchased by each customer? */
+#### 3. What was the first item from the menu purchased by each customer? 
 
-With first_order as (select s.customer_id,m.product_name,
+         With first_order as (select s.customer_id,m.product_name,
 
-row_number() OVER(partition by s.customer_id 
+                          row_number() OVER(partition by s.customer_id 
 
-order by s.order_date,s.product_id ) as n
+                          order by s.order_date,s.product_id ) as n
 
-from sales as s join menu as m on m.product_id=s.product_id)
+          from sales as s join menu as m on m.product_id=s.product_id)
 
-select customer_id,product_name from first_order
+          select customer_id,product_name from first_order
 
-where n=1;
+          where n=1;
 
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/8e687e81-87ef-4273-a155-912eee8e0996)
-#### 4/* What is the most purchased item on the menu and how many times was it purchased by all customers?*/
+#### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
-select m.product_name,count(s.product_id) as n_purchased from menu as m 
+        select m.product_name,count(s.product_id) as n_purchased from menu as m 
 
-join sales as son m.product_id=s.product_id
+        join sales as son m.product_id=s.product_id
 
-group by m.product_name
+        group by m.product_name
 
-order by n_purchased DESC
+        order by n_purchased DESC
 
-limit 1;
+        limit 1;
 
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/5eda05fd-4f73-4568-81ce-b15a98f13782)
-#### 5/* Which item was the most popular for each customer?*/
+#### 5 Which item was the most popular for each customer?
 
-with Most_popular as (select s.customer_id,m.product_name,
+        with Most_popular as (select s.customer_id,m.product_name,
 
-Rank() over (partition by s.Customer_id 
+                              Rank() over (partition by s.Customer_id 
 
-order by count(m.product_name) DESC
+                              order by count(m.product_name) DESC
 
-) as r from menu as m join sales as s
+                               ) as r from menu as m join sales as s
 
-on m.product_id=s.product_id
+       on m.product_id=s.product_id
 
-group by s.customer_id,m.product_name)
+       group by s.customer_id,m.product_name)
 
-select customer_id,product_name,r from Most_popular
+       select customer_id,product_name,r from Most_popular
 
-where r=1;
+       where r=1;
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/e0bca9e2-c5b4-49a6-94c4-3746ffd67d1f)
 
-#### 6 /* Which item was purchased first by the customer after they became a member?*/
+#### 6 Which item was purchased first by the customer after they became a member?
 
-with item_after_membership as(select mem.customer_id as customer, m.product_name as product ,
+       with item_after_membership as(select mem.customer_id as customer, m.product_name as product ,
 
-rank() over(partition by mem.customer_id
+                                     rank() over(partition by mem.customer_id
 
-order by s.order_date ) as r
+                                     order by s.order_date ) as r
 
-from members as mem  join sales as s on mem.customer_id=s.customer_id
+       from members as mem  join sales as s on mem.customer_id=s.customer_id
 
-join  menu as m on m.product_id=s.product_id
+       join  menu as m on m.product_id=s.product_id
 
-where mem.join_date>=s.order_date)
+       where mem.join_date>=s.order_date)
 
-select customer,product,r from item_after_membership
+       select customer,product,r from item_after_membership
 
-where r=1 ;
+        where r=1 ;
 
 #### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/b58e21d2-ff7a-4771-b15b-a1ec3e0e1045)
-#### 7/* Which item was purchased just before the customer became a member?*/
+#### 7 Which item was purchased just before the customer became a member?
 
-with item_before_membership as(select mem.customer_id as customer, m.product_name as product ,
+        with item_before_membership as(select mem.customer_id as customer, m.product_name as product ,
 
-rank() over(partition by mem.customer_id
+                                       rank() over(partition by mem.customer_id
 
-order by s.order_date DESC ) as r
+                                       order by s.order_date DESC ) as r
 
-from members as mem join sales as s on s.customer_id=mem.customer_id
+        from members as mem join sales as s on s.customer_id=mem.customer_id
 
-join menu as m on s.product_id=m.product_id
+        join menu as m on s.product_id=m.product_id
 
-where mem.join_date<s.order_date)
+        where mem.join_date<s.order_date)
 
-select distinct(customer),product,r from item_before_membership
+        select distinct(customer),product,r from item_before_membership
 
-where r=1 ;
+        where r=1 ;
 #### output 
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/a9858d8c-969b-440a-90ae-605cdfe043d2)
+#### 8  What is the total items and amount spent for each member before they became a member?
 
+          select mem.customer_id,count(s.product_id) as total_item,sum(m.price) as amount_spent from
+
+          members as mem join sales as s on mem.customer_id=s.customer_id
+
+          join menu as m on m.product_id=s.product_id
  
+          where mem.join_date>s.order_date
+
+          group by mem.customer_id;
+
+#### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/47904ae7-eb75-4cfa-a567-aa4a0d124dd5)
+#### 9 If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
+
+       select s.customer_id,sum(case when m.product_name="sushi" then (m.price*20)
+
+                                       else(m.price*10)
+                        
+                                      end) as points from menu as m join sales as s on m.product_id=s.product_id
+
+        group by s.customer_id; </mark>
+
+#### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/bdbf3cdb-a8c3-45d6-820e-712a037b1dea)
+
+#### 10 In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+
+      SELECT 
+    
+           mem.customer_id,SUM(CASE
+                  
+                  WHEN s.order_date < mem.join_date THEN
+                      
+                      CASE WHEN m.product_name = 'sushi' THEN (m.price * 20)
+                      
+                      ELSE (m.price * 10)
+                     
+                     END
+                    
+                 WHEN  s.order_date > (mem.join_date + 6) THEN
+             
+                    CASE WHEN m.product_name = 'sushi' THEN (m.price * 20)
+                                 
+                    ELSE (m.price * 10)
+ 
+                   CASE  WHEN m.product_name = 'sushi' THEN (m.price * 20)
+              
+                   ELSE (m.price * 10)
+
+            END
+        
+        ELSE (m.price * 20)END)
+
+    FROM members AS mem JOIN sales AS s ON s.customer_id = mem.customer_id
+        
+        JOIN  menu AS m ON s.product_id = m.product_id
+
+     WHERE s.order_date <= '2021-01-31'
+
+    GROUP BY s.customer_id;
+    
+#### output    
+
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/4df65629-b378-4852-bdb5-a391e902de19)
+
+
+
  
  
 
