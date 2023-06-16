@@ -49,4 +49,63 @@ This case study has LOTS of questions - they are broken up by area of focus incl
 5. Bonus DML Challenges (DML = Data Manipulation Language)
 
 Each of the following case study questions can be answered using a single SQL statement.
+##  Data Cleaning
+
+     SELECT * FROM customer_orders;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/aceec8da-62c6-4eac-a84e-8affe96efc33)
+
+In customer_orders table, we see a lot of empty spaces and null vaues in the columns exclusions and extras
+
+    DROP TABLE IF EXISTS new_customer_orders;
+
+    CREATE TEMPORARY TABLE new_customer_orders AS (
+                                                  SELECT order_id, customer_id, pizza_id,
+
+                                                   CASE 
+                                                       
+                                                       WHEN exclusions='' or exclusions like 'null' THEN null
+                                                    
+                                                       ELSE exclusions END AS exclusions,
+                                                    
+                                                    CASE
+                                                        WHEN extras='' or extras like'null' THEN null
+                                                       
+                                                        ELSE extras END AS extras,order_time FROM customer_orders);
+     
+     SELECT * FROM new_customer_orders;
+
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/a358c602-f57c-4964-9ff2-322071e99c96)
+
+Now, for the table runner_orders
+
+       DROP TABLE IF EXISTS new_runner_orders;
+      
+       CREATE TEMPORARY TABLE new_runner_orders as (SELECT order_id,runner_id,CASE WHEN pickup_time="" or pickup_time like "null" 
+                                                
+                                                 then null end as pickup_time,,
+                                                 
+                                                 NULLIF(regexp_replace(distance,"[^0-9.]",""),"") as distance,
+										
+                                                 NULLIF(regexp_replace(duration,"[^0-9.]",""),"") as duration,
+                                             
+                                                 CASE WHEN cancellation LIKE 'null' OR cancellation LIKE 'NaN' OR cancellation LIKE ''                                                   
+                                                 THEN NULL ELSE cancellation END AS cancellation FROM runner_orders);
+      
+      ALTER TABLE new_runner_orders
+       
+       MODIFY COLUMN pickuP_time timestamp,
+       
+       MODIFY COLUMN distance NUMERIC,
+       
+       MODIFY COLUMN duration NUMERIC;
+
+      SELECT * FROM new_runner_orders;  
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/05be9cb7-a529-4963-b5c1-862ed2b635a5)
+
+      
+      
+ 
 
