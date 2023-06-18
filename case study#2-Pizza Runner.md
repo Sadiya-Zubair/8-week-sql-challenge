@@ -104,7 +104,45 @@ Now, for the table runner_orders
       SELECT * FROM new_runner_orders;  
 ### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/05be9cb7-a529-4963-b5c1-862ed2b635a5)
+### 1 How many of each type of pizza was delivered?
+                 select pn.pizza_name,count(pn.pizza_name) as n_pizzas from pizza_names as pn
+                   
+		    join new_customer_orders as co on pn.pizza_id=co.pizza_id
+                  
+		    join new_runner_orders as ro on ro.order_id=co.order_id
+                    
+		    where ro.cancellation is null
+                   
+		    group by pn.pizza_name;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/f3945fd2-33fc-4eab-a2de-b47e7bfece52)
 
+
+### 2 How many Vegetarian and Meatlovers were ordered by each customer?*/
+      SELECT customer_id,
+	  sum(
+		CASE
+			WHEN pizza_id = 1 THEN 1
+			ELSE 0
+		END
+	     ) AS meat_lovers,
+	   sum(
+		CASE
+			WHEN pizza_id = 2 THEN 1
+			ELSE 0
+		END
+	       ) AS vegetarian
+       FROM new_customer_orders
+       GROUP BY customer_id
+       ORDER BY customer_id;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/846e9c81-38bd-4f3c-9544-dec1d057e2f3)
+
+### 3
+
+
+       
+       
       
       
  
