@@ -181,7 +181,41 @@ Now, for the table runner_orders
        GROUP BY c.pizza_id;
  ### output
  ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/dd2fbd2c-b41a-404c-826a-d3a484f6478d)
+### 6.How many pizza were deliveres?
+        
+	SELECT c.pizza_id,COUNT(c.pizza_id) AS n_pizza 
+         
+	FROM new_customer_orders c JOIN new_runner_orders AS r
+            
+	ON c.order_id=r.order_id
 
+        GROUP BY c.pizza_id;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/b3c4f7ba-144d-4c56-a862-e2a896275b62)
+
+### 7.How many unique customer orders were made?
+
+        SELECT count(DISTINCT(order_id)) AS n_orders
+
+        FROM new_customer_orders;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/487f0797-d031-4042-a5d7-a2b3933b9652)
+
+### 8.How many successful orders were delivered by each runner?
+        
+         SELECT runner_id, COUNT(order_id) as suc_orders FROM new_runner_orders 
+
+         WHERE cancellation is NULL
+
+         GROUP BY runner_id;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/a742ecc9-caf7-4350-864d-74d68415a360)
+
+	 
+	
+	
+
+ 
 
             
 
