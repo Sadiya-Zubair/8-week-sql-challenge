@@ -138,7 +138,52 @@ Now, for the table runner_orders
 ### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/846e9c81-38bd-4f3c-9544-dec1d057e2f3)
 
-### 3
+### 3.What was the maximum number of pizzas delivered in a single order?
+
+       WITH n_order_count AS (SELECT c.order_id,COUNT(c.pizza_id) AS n_orders
+
+                              FROM  new_customer_orders AS c JOIN  new_runner_orders AS ro ON ro.order_id=c.order_id
+                                     
+			      WHERE ro.cancellation is null
+                              
+			      GROUP BY c.order_id)
+
+       SELECT MAX(n_orders) AS max_orders_delivered FROM n_order_count;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/aa680a70-2332-4221-9dd5-73fd93ca2bdd)
+
+### 4.For each customer, how many delivered pizzas had at least 1 change and how many had no change?
+
+       SELECT c.customer_id,SUM(CASE
+
+                                    WHEN c.exclusions IS NULL OR c.extras IS NULL THEN 1 ELSE 0 END) AS no_changes,
+                            SUM(CASE
+
+                                     WHEN c.exclusions IS NOT NULL  OR c.extras IS NOT NULL THEN 1 ELSE 0 END) AS changes
+
+
+        FROM  new_customer_orders AS c JOIN  new_runner_orders AS ro ON ro.order_id=c.order_id
+                                     
+        WHERE ro.cancellation IS NULL
+
+        GROUP BY c.customer_id;
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/6f2685c8-5275-45bc-b5b0-b862863539e8)
+
+### 5.How many pizzas were delivered that had both exclusions and extras?
+      
+       SELECT count(c.pizza_id) as n_both_exc_extras 
+       
+       FROM  new_customer_orders AS c JOIN  new_runner_orders AS ro ON ro.order_id=c.order_id
+
+       WHERE c.exclusions IS NOT NULL  AND c.extras IS NOT NULL AND ro.cancellation IS NULL 
+
+       GROUP BY c.pizza_id;
+ ### output
+ ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/dd2fbd2c-b41a-404c-826a-d3a484f6478d)
+
+
+            
 
 
        
