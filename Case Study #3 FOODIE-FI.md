@@ -69,9 +69,18 @@ When customers churn - they will keep their access until the end of their curren
         where year(start_date)>2020
         group by plan_name;
 ### output
-![Uploading image.png…]()
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/5eddc231-918c-405c-91a0-7e3cbc2308b2)
 
 ### 4.What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
+        Select count(customer_id)  as n_count, round(count(customer_id)/(select count(distinct(customer_id),1)
+        from subscription)*100,1) as Percentage
+        from plans right join subscription on
+        plans.plan_id=subscription.plan_id
+        where plan_name="churn"
+        group by plan_name;
+### output
+![Uploading image.png…]()
+
 
 
         
