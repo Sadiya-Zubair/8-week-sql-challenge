@@ -40,13 +40,41 @@ When customers upgrade their account from a basic plan to a pro or annual pro pl
 
 When customers churn - they will keep their access until the end of their current billing period but the start_date will be technically the day they decided to cancel their service.
 
-![Uploading image.png…]()
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/342a17b6-22cb-4b2f-97ea-f527c41c058b)
 
 ## Case Study Questions
 
-## A. Customer Journey
-Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customer’s onboarding journey.
+### 1.How many customers has Foodie-Fi ever had?
+ 
+       Select count(distinct(customer_id))
+             as n from subscription;
 
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/be107163-bf8b-44b6-9cec-7e8df60a558f) 
+
+### 2.What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
+
+        Select MONTH(start_date) as Month,count(plan_id) as n from subscription
+        where plan_id=0
+        group by month 
+        order by month ASC;
+
+### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/f347c727-8c4e-4044-93c6-26a4a0a11491)
+
+### 3.What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name
+        Select plans.plan_name, count(plans.plan_id) as n
+        from plans right join subscription on
+        plans.plan_id=subscription.plan_id
+        where year(start_date)>2020
+        group by plan_name;
+### output
+![Uploading image.png…]()
+
+### 4.What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
+
+
+        
 
 
 
