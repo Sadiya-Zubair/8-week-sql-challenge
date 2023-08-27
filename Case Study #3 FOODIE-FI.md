@@ -28,9 +28,9 @@ Customers can sign up to an initial 7 day free trial will automatically continue
 
 When customers cancel their Foodie-Fi service - they will have a churn plan record with a null price but their plan will continue until the end of the billing period.
 
-![Uploading image.png…]()
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/2ab4bba1-ee6d-4324-ab69-40e8cf9401d7)
 
-# Table 2: subscriptions
+### Table 2: subscriptions
 
 Customer subscriptions show the exact date where their specific plan_id starts.
 
@@ -39,6 +39,15 @@ If customers downgrade from a pro plan or cancel their subscription - the higher
 When customers upgrade their account from a basic plan to a pro or annual pro plan - the higher plan will take effect straightaway.
 
 When customers churn - they will keep their access until the end of their current billing period but the start_date will be technically the day they decided to cancel their service.
+
+![Uploading image.png…]()
+
+## Case Study Questions
+
+## A. Customer Journey
+Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customer’s onboarding journey.
+
+
 
 
 
