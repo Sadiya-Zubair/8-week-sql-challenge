@@ -1,6 +1,6 @@
 # 8-week-sql-challenge -Danny Ma
 
-In this Repository, I try to solve Case Studies quesions of https://8weeksqlchallenge.com/ created by Danny Ma.
+In this Repository, I try to solve Case Studies quesions of [8 weeks challenge](https://8weeksqlchallenge.com/) created by Danny Ma.
 
 All the solutions are coded using MySql.
 
