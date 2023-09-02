@@ -5,7 +5,7 @@ In this Repository, I try to solve Case Studies quesions of https://8weeksqlchal
 All the solutions are coded using MySql.
 
 ## Case Studies
-Case Study #1 - Danny's Diner
+Case Study #1 - [Danny's Diner](https://github.com/Sadiya-Zubair/8-week-sql-challenge/blob/main/Case%20Study%20%231%20-%20Danny's%20Diner.md)
 
 Case Study #2 - Pizza Runner
 
