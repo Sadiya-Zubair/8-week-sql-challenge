@@ -7,9 +7,9 @@ All the solutions are coded using MySql.
 ## Case Studies
 Case Study #1 - [Danny's Diner](https://github.com/Sadiya-Zubair/8-week-sql-challenge/blob/main/Case%20Study%20%231%20-%20Danny's%20Diner.md)
 
-Case Study #2 - Pizza Runner
+Case Study #2 - [Pizza Runner](https://github.com/Sadiya-Zubair/8-week-sql-challenge/blob/main/case%20study%232-Pizza%20Runner.md)
 
-Case Study #3 - Foodie-Fi
+Case Study #3 - [Foodie-Fi]()
 
 Case Study #4 - Data Bank
 
