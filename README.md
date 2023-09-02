@@ -9,7 +9,7 @@ Case Study #1 - [Danny's Diner](https://github.com/Sadiya-Zubair/8-week-sql-chal
 
 Case Study #2 - [Pizza Runner](https://github.com/Sadiya-Zubair/8-week-sql-challenge/blob/main/case%20study%232-Pizza%20Runner.md)
 
-Case Study #3 - [Foodie-Fi]()
+Case Study #3 - [Foodie-Fi](https://github.com/Sadiya-Zubair/8-week-sql-challenge/blob/main/Case%20Study%20%233%20FOODIE-FI.md)
 
 Case Study #4 - Data Bank
 
