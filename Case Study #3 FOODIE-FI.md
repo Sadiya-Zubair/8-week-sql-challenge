@@ -79,7 +79,10 @@ When customers churn - they will keep their access until the end of their curren
         where plan_name="churn"
         group by plan_name;
 ### output
-![Uploading image.png…]()
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/9cfe6b5d-fb18-4bf0-a46c-23b71d429773)
+
+
+
 
 
 
