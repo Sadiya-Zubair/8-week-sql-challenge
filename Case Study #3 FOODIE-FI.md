@@ -62,6 +62,7 @@ When customers churn - they will keep their access until the end of their curren
 
 ### output
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/be107163-bf8b-44b6-9cec-7e8df60a558f) 
+
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/f347c727-8c4e-4044-93c6-26a4a0a11491)
 
 ### 3.What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name
