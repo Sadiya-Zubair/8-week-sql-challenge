@@ -64,26 +64,78 @@ When customers churn - they will keep their access until the end of their curren
 
 ### 3.What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name
         Select plans.plan_name, count(plans.plan_id) as n
-        from plans right join subscription on
-        plans.plan_id=subscription.plan_id
+        from plans right join subscription on plans.plan_id=subscription.plan_id
         where year(start_date)>2020
         group by plan_name;
 ### output
 ![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/55eb60ee-0d63-4845-9fad-5eab192feec5)
 
 ### 4.What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
-        Select count(customer_id)  as n_count, round(count(customer_id)/(select count(distinct(customer_id),1)
-        from subscription)*100,1) as Percentage
-        from plans right join subscription on
-        plans.plan_id=subscription.plan_id
+        Select 
+             count(customer_id)  as n_count,
+             round(count(customer_id)/(select count(distinct(customer_id),1) from subscription)*100,1) as Percentage
+        from plans right join subscription on plans.plan_id=subscription.plan_id
         where plan_name="churn"
         group by plan_name;
 ### output
 ![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/9cfe6b5d-fb18-4bf0-a46c-23b71d429773)
 
+### 5.How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?       
+        with churned_customers as (
+               select *, Row_number() over (partition by customer_id order by plan_id) as row_num
+               from subscription
+           )
+       select 
+             count(customer_id) as n_counts,
+	            round(count(customer_id)/(select count(distinct(customer_id))
+       from subscription)*100) as Percentage from churned_customers 
+       where row_num=2 and plan_id=4;
+### output
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/46acf952-d7b6-4ca4-b54f-c8b5355a9060)
 
+### 6.What is the number and percentage of customer plans after their initial free trial?
 
+           with churned_customers as (
+           select *, Row_number() over (partition by customer_id order by plan_id) as row_num
+           from subscription
+          )
+          select 
+            plan_id,count(customer_id) as n_counts,
+	           round(count(customer_id)/(select count(distinct(customer_id))
+         from subscription)*100) as Percentage from churned_customers 
+         where row_num=2 
+         group by plan_id;
+### output
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/12437944-1bdc-4bf9-86a9-26c6c3160a22)
 
+### 7.What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?
+
+         select plan_id,count(customer_id) as customer_count,
+                round(count(customer_id)/(select count(distinct(customer_id))
+         from subscription)*100) as Percentage from subscription 
+         group by plan_id;
+ ### output
+ ![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/a7b2f3a9-f025-4e6b-9cbc-a393d2ae3e0c)
+
+### 8.How many customers have upgraded to an annual plan in 2020?
+          
+           select count(customer_id) as customer_count 
+                  from plans as p join subscription as s on p.plan_id=s.plan_id
+           where plan_name="pro annual";
+### output
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/6df34485-2cbb-4449-b8a4-5cd8c904e459)
+
+### 9.How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?
+           
+            with t1 as(select customer_id, start_date from subscription where plan_id=0),
+                 t2 as (select customer_id, start_date from subscription where plan_id=3)
+            select
+                 round(avg(datediff(t2.start_date,t1.start_date))) as avg_no_of_days 
+            from t1 join t2 on t1.customer_id=t2.customer_id;
+### output
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/dc62157e-973b-443e-94be-e9de3c4c38a5)
+
+       
 
 
         
