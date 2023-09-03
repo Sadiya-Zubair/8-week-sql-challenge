@@ -50,7 +50,8 @@ When customers churn - they will keep their access until the end of their curren
              as n from subscription;
 
 ### output
-![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/be107163-bf8b-44b6-9cec-7e8df60a558f) 
+![image](https://github.com/Sadiya-Zubair/8-week-sql-challenge/assets/36756199/e638d120-a22a-4d59-a66a-97c97762c433)
+
 
 ### 2.What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
 
@@ -60,6 +61,7 @@ When customers churn - they will keep their access until the end of their curren
         order by month ASC;
 
 ### output
+![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/be107163-bf8b-44b6-9cec-7e8df60a558f) 
 ![image](https://github.com/dreamersz/8-week-sql-challenge/assets/36756199/f347c727-8c4e-4044-93c6-26a4a0a11491)
 
 ### 3.What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name
